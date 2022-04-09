@@ -1,28 +1,27 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react';
-import { createSpendingRecord, getSpendingRecords } from '../firebase/spendingRecords'
+import { createSpendingRecord } from '../firebase/spendingRecords'
 import { signIn, signOut } from '../firebase/authentication'
-import { auth } from '../firebase/config'
+import { auth, db } from '../firebase/config'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { SpendingRecord } from '../types';
+import { collection, query, where, orderBy } from "firebase/firestore";
+import useFetchCollectionData from '../hooks/useFetchCollectionData'
+import type { SpendingRecord } from '../types';
+
 
 const Home: NextPage = () => {
-  const [spendingRecords, setSpendingRecords] = useState<SpendingRecord[]>([]);
   const [user, setUser] = useState<User | null>()
 
-  useEffect(() => {
-    (async() => {
-      try {
-        const records = await getSpendingRecords()
-        setSpendingRecords(records as SpendingRecord[]) // Fix it later
-      } catch (e) {
-        alert('Ooops')
-      }
-    })()
 
+  const uid = "shum4q84tFOdAfORInn6QRXRUbt2"
+  const q = query(collection(db, "spendingRecords"), where('uid', '==', uid), orderBy('date', 'asc'))
+
+  const [ result, loading, error ] = useFetchCollectionData(q)
+
+  useEffect(() => {
     const unsub = onAuthStateChanged(auth, user => {
       if(user) {
         setUser(user)
@@ -34,8 +33,9 @@ const Home: NextPage = () => {
     return () => {
       unsub()
     }
-  }, []);
- 
+  }, [user]);
+
+
   if(!user) {
     return (
       <>
@@ -56,10 +56,20 @@ const Home: NextPage = () => {
       <main className={styles.main}>
 
 
-        <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: "234"})}}>Create Record</button>
+        <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: user.uid})}}>Create Record</button>
         <button onClick={() => {signIn()}}>SignIN</button>
         <button onClick={() => {signOut()}}>SignOut</button>
+
+        <ul>
+          {result.map((item, i) => (
+            <li key={i}>
+              <span>{ item.category }</span>
+              <span>{ item.amount }</span>
+            </li>
+          ))}
+        </ul>
       </main>
+
 
       <footer className={styles.footer}>
         <a
