@@ -1,10 +1,29 @@
 import type { NextPage } from 'next'
-import createSpendingRecord from '../firebase/spendingRecords/createSpendingRecord'
+import { useState, useEffect } from 'react';
+import { createSpendingRecord, getSpendingRecords } from '../firebase/spendingRecords'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { SpendingRecord } from '../types';
 
 const Home: NextPage = () => {
+  const [spendingRecords, setSpendingRecords] = useState<SpendingRecord[]>([]);
+  
+  useEffect(() => {
+    (async() => {
+      try {
+        const records = await getSpendingRecords()
+        setSpendingRecords(records as SpendingRecord[]) // Fix it later
+      } catch (e) {
+        alert('Ooops')
+      }
+    })()
+  }, []);
+ 
+  console.log(spendingRecords)
+
+
+  
   return (
     <div className={styles.container}>
       <Head>
