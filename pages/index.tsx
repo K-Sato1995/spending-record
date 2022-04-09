@@ -1,6 +1,9 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react';
 import { createSpendingRecord, getSpendingRecords } from '../firebase/spendingRecords'
+import { signIn, signOut } from '../firebase/authentication'
+import { auth } from '../firebase/config'
+import { onAuthStateChanged, User } from 'firebase/auth'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -8,7 +11,8 @@ import { SpendingRecord } from '../types';
 
 const Home: NextPage = () => {
   const [spendingRecords, setSpendingRecords] = useState<SpendingRecord[]>([]);
-  
+  const [user, setUser] = useState<User | null>()
+
   useEffect(() => {
     (async() => {
       try {
@@ -18,12 +22,29 @@ const Home: NextPage = () => {
         alert('Ooops')
       }
     })()
+
+    const unsub = onAuthStateChanged(auth, user => {
+      if(user) {
+        setUser(user)
+      } else {
+        setUser(null)
+      }
+    })
+
+    return () => {
+      unsub()
+    }
   }, []);
  
-  console.log(spendingRecords)
+  if(!user) {
+    return (
+      <>
+        <h1>Need to signin</h1> 
+        <button onClick={() => {signIn()}}>SignIN</button>
+      </>
+    )
+  }
 
-
-  
   return (
     <div className={styles.container}>
       <Head>
@@ -35,7 +56,9 @@ const Home: NextPage = () => {
       <main className={styles.main}>
 
 
-        <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233})}}>Create</button>
+        <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: "234"})}}>Create Record</button>
+        <button onClick={() => {signIn()}}>SignIN</button>
+        <button onClick={() => {signOut()}}>SignOut</button>
       </main>
 
       <footer className={styles.footer}>

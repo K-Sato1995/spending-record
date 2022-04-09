@@ -3,11 +3,12 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import type { SpendingRecord } from '../../types';
 
 const createSpendingRecord = async (record: Omit<SpendingRecord, 'date'>) => {
-    const { category, amount } = record
+    const { category, amount, uid } = record
     try {
         await addDoc(collection(db, "spendingRecords"), {
             category,
             amount,
+            uid,
             date: serverTimestamp()
         })
         // Use notification library for this.

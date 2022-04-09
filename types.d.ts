@@ -2,7 +2,8 @@ type SpendingCategory = "Bills" | "Groceries" | "Rent"
 
 interface SpendingRecord {
     category: SpendingCategory 
-    amount: number 
+    amount: number
+    uid: string
     date: any // ill look up later
 }
 
