@@ -9,8 +9,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { collection, query, where, orderBy } from "firebase/firestore";
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
-import type { SpendingRecord } from '../types';
-
+import { format } from 'date-fns'
 
 const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>()
@@ -33,8 +32,15 @@ const Home: NextPage = () => {
     return () => {
       unsub()
     }
-  }, [user]);
+  }, []);
 
+  if(error) {
+    return <h1>Error</h1>
+  }
+
+  if(loading) {
+    return <h1>Loading</h1>
+  }
 
   if(!user) {
     return (
@@ -54,8 +60,6 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-
-
         <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: user.uid})}}>Create Record</button>
         <button onClick={() => {signIn()}}>SignIN</button>
         <button onClick={() => {signOut()}}>SignOut</button>
@@ -63,8 +67,9 @@ const Home: NextPage = () => {
         <ul>
           {result.map((item, i) => (
             <li key={i}>
-              <span>{ item.category }</span>
-              <span>{ item.amount }</span>
+              <span>category: { item.category }</span>
+              <span>amount: { item.amount }</span>
+              {/* <span>date: { format(new Date(item.date?.toDate()), 'yyyy-MM-dd') }</span> */}
             </li>
           ))}
         </ul>
