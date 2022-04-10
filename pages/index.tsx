@@ -7,16 +7,28 @@ import { onAuthStateChanged, User } from 'firebase/auth'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import { collection, query, where, orderBy } from "firebase/firestore";
+import { collection, query, where, orderBy, startAt, endAt } from "firebase/firestore";
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 
 const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>()
 
+  const [monthNum, setMonthNum] = useState<number>(0)
 
+  // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#syntax
+  // const date = new Date(), year = date.getFullYear(), month = date.getMonth();
+  // new Date(year, monthIndex, day)
+  const today = new Date()
+  const year =  today.getFullYear()
+  const month = today.getMonth();
+  const startDate = new Date(year, month + monthNum, 1)
+  const endDate = new Date(year, month + monthNum + 1, 0)
+
+  console.log(startDate)
+  console.log(endDate)
   const uid = "shum4q84tFOdAfORInn6QRXRUbt2"
-  const q = query(collection(db, "spendingRecords"), where('uid', '==', uid), orderBy('date', 'asc'))
+  const q = query(collection(db, "spendingRecords"), where('uid', '==', uid), orderBy('date', 'asc'), where('date', ">=", startDate), where('date', '<=', endDate))
 
   const [ result, loading, error ] = useFetchCollectionData(q)
 
@@ -63,6 +75,8 @@ const Home: NextPage = () => {
         <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: user.uid})}}>Create Record</button>
         <button onClick={() => {signIn()}}>SignIN</button>
         <button onClick={() => {signOut()}}>SignOut</button>
+        <button onClick={() => {setMonthNum(monthNum + 1)}}>+</button>
+        <button onClick={() => {setMonthNum(monthNum - 1)}}>-</button>
 
         <ul>
           {result.map((item, i) => (
