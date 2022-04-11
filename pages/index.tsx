@@ -85,9 +85,11 @@ const Home: NextPage = () => {
           <button onClick={() => {signOut()}}>SignOut</button>
 
           {/* Calendar */}
-          <h1>{<span>date: { format(startDate, 'yyyy-MM') }</span>}</h1>
-          <button onClick={() => {setMonthNum(monthNum + 1)}}>+</button>
-          <button onClick={() => {setMonthNum(monthNum - 1)}}>-</button>
+          <div className={styles.targetMonth}>
+            <button onClick={() => {setMonthNum(monthNum - 1)}}>{'<'}</button>
+            <span>{ format(startDate, 'yyyy-MM') }</span>
+            <button onClick={() => {setMonthNum(monthNum + 1)}}>{'>'}</button>
+          </div>
 
           {/* Records */}
           <div className={styles.records}>

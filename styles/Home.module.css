@@ -1,7 +1,6 @@
 
 .container {
   min-height: 100vh;
-  border: solid 2px blue;
   display: grid;
   grid-template:
     "top top top"
@@ -32,6 +31,23 @@
 .main {
   grid-area: main;
   border: solid yellow 2px;
+}
+
+.targetMonth {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+
+.targetMonth > button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 1.3rem;
+  margin: 0 1rem;
+  color: var(--secondary-color);
 }
 
 .records {
