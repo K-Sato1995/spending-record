@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react';
-import { createSpendingRecord } from '../firebase/spendingRecords'
 import { signIn, signOut } from '../firebase/authentication'
 import { auth, db } from '../firebase/config'
 import { onAuthStateChanged, User } from 'firebase/auth'
@@ -9,10 +8,11 @@ import styles from '../styles/Home.module.css'
 import { collection, query, where, orderBy, startAt, endAt } from "firebase/firestore";
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>()
-
+  const router = useRouter()
   const [monthNum, setMonthNum] = useState<number>(0)
 
   // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#syntax
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
         <div className={styles.top}>
           <span>Total money spent</span>
           <h3 className={styles.total}>{toJPYen(5000)}</h3>
-          <button className={styles.newRecordButton} onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: user.uid})}}>+</button>
+          <button className={styles.newRecordButton} onClick={() => {router.push('/form')}}><span>+</span></button>
         </div>
 
         <div className={styles.main}>

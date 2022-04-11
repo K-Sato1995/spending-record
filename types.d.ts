@@ -1,4 +1,4 @@
-type SpendingCategory = "Bills" | "Groceries" | "Rent"
+type SpendingCategory = "Bills" | "Groceries" | "Rent" | "Others"
 
 interface SpendingRecord {
     category: SpendingCategory 
