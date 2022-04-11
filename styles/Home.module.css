@@ -48,6 +48,7 @@
   font-size: 1.5rem;
   background-color: var(--main-color);
   border: solid 3px var(--background-color);
+  color: var(--background-color);
   display: flex;
   justify-content: center;
   align-items: center;

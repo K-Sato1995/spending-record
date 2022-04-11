@@ -6,6 +6,8 @@ import { Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css'
 
 const options = [
   { value: 'Groceries', label: 'Groceries' },
@@ -75,15 +77,13 @@ const Form = () => {
             })
           }}
         />
-        <input
-          type='date'
-          placeholder='Date'
-          value={formValue.date}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            e.preventDefault()
-            setFormValue({ ...formValue, date: e.target.value })
-          }}
-        />
+        <DatePicker
+            selected={formValue.date}
+            placeholderText="Date"
+            onChange={(date) => {
+              setFormValue({ ...formValue, date: date })
+            }}
+          />
         <button>Create</button>
 
         <button
