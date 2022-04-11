@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { initializeApp } from 'firebase/app'
+import { getFirestore } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 
 const config = {
@@ -8,7 +8,7 @@ const config = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
 }
 
-const firebaseApp = initializeApp(config);
+const firebaseApp = initializeApp(config)
 const db = getFirestore(firebaseApp)
 const auth = getAuth()
 

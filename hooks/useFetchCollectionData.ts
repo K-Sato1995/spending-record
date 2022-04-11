@@ -14,7 +14,6 @@ function useFetchCollectionData(
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState<boolean>(false)
 
-
   useEffect(() => {
     const unsbscribe = onSnapshot(query, (fbData) => {
       try {
@@ -25,8 +24,8 @@ function useFetchCollectionData(
           data.push({ ...doc.data(), id: doc.id })
         })
 
-        // Not sure what the best way to handle this is 
-        if(result.toString() !== data.toString()) {
+        // Not sure what the best way to handle this is
+        if (result.toString() !== data.toString()) {
           setResult(data)
         }
         setLoading(false)

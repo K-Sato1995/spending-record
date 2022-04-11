@@ -1,3 +1,3 @@
-import createSpendingRecord from "./createSpendingRecord";
+import createSpendingRecord from './createSpendingRecord'
 
 export { createSpendingRecord }

@@ -1,14 +1,13 @@
-
 .container {
   min-height: 100vh;
   display: grid;
   grid-template:
-    "top top top" 200px
-    "main main main"
-    "footer footer footer";
+    'top top top' 200px
+    'main main main'
+    'footer footer footer';
   --main-color: #fff;
   --background-color: #141318;
-  --secondary-color: #6A7281;
+  --secondary-color: #6a7281;
   --link-color: #0076df;
   --border-color: #e5e7eb;
 }
@@ -78,7 +77,6 @@
 
 .records {
   /* border: solid 1px; */
-
 }
 
 .recordsList {
@@ -96,16 +94,14 @@
 }
 
 .recordCategory {
-
 }
 
 .recordAmount {
-
 }
 
 .noRecord {
   padding: 1rem;
-  text-align: center; 
+  text-align: center;
 }
 
 .recordDate {
