@@ -25,8 +25,6 @@ const Home: NextPage = () => {
   const startDate = new Date(year, month + monthNum, 1)
   const endDate = new Date(year, month + monthNum + 1, 0)
 
-  console.log(startDate)
-  console.log(endDate)
   const uid = "shum4q84tFOdAfORInn6QRXRUbt2"
   const q = query(collection(db, "spendingRecords"), where('uid', '==', uid), orderBy('date', 'asc'), where('date', ">=", startDate), where('date', '<=', endDate))
 
@@ -75,6 +73,7 @@ const Home: NextPage = () => {
         <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: user.uid})}}>Create Record</button>
         <button onClick={() => {signIn()}}>SignIN</button>
         <button onClick={() => {signOut()}}>SignOut</button>
+        <h1>{<span>date: { format(startDate, 'yyyy-MM') }</span>}</h1>
         <button onClick={() => {setMonthNum(monthNum + 1)}}>+</button>
         <button onClick={() => {setMonthNum(monthNum - 1)}}>-</button>
 
