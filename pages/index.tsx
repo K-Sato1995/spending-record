@@ -76,18 +76,18 @@ const Home: NextPage = () => {
       <main className={styles.container}>
 
         <div className={styles.top}>
+          <span>Total money spent</span>
           <h3 className={styles.total}>{toJPYen(5000)}</h3>
-          <button onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: user.uid})}}>Create Record</button>
+          <button className={styles.newRecordButton} onClick={() => {createSpendingRecord({category: "Groceries", amount: 233, uid: user.uid})}}>+</button>
         </div>
 
         <div className={styles.main}>
-          <button onClick={() => {signIn()}}>SignIN</button>
-          <button onClick={() => {signOut()}}>SignOut</button>
+          {/* <button onClick={() => {signOut()}}>SignOut</button> */}
 
           {/* Calendar */}
           <div className={styles.targetMonth}>
             <button onClick={() => {setMonthNum(monthNum - 1)}}>{'<'}</button>
-            <span>{ format(startDate, 'yyyy-MM') }</span>
+            <span>{ format(startDate, 'yyyy / MM') }</span>
             <button onClick={() => {setMonthNum(monthNum + 1)}}>{'>'}</button>
           </div>
 
