@@ -24,6 +24,7 @@
 
 .top > span {
   color: var(--secondary-color);
+  margin-bottom: 1rem;
 }
 
 .total {
