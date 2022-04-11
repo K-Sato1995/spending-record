@@ -5,7 +5,7 @@ import styles from '../styles/Form.module.css'
 import { Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import Select from 'react-select'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
 
 const options = [
   { value: 'Groceries', label: 'Groceries' },
@@ -40,7 +40,7 @@ const Form = () => {
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault()
 
-          if(!formValue.category || !formValue.amount || !formValue.date) {
+          if (!formValue.category || !formValue.amount || !formValue.date) {
             toast.error('You have to fill up all the fields')
             return
           }

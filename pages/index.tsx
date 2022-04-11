@@ -17,10 +17,16 @@ import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
 
+
+const toJPYen = (num: number) => {
+  return num.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
+}
+
 const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>()
   const router = useRouter()
   const [monthNum, setMonthNum] = useState<number>(0)
+  const [totalAmount, setTotalAmount] = useState<number>(0)
 
   // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#syntax
   // const date = new Date(), year = date.getFullYear(), month = date.getMonth();
@@ -42,11 +48,12 @@ const Home: NextPage = () => {
 
   const [result, loading, error] = useFetchCollectionData(q)
 
-  const toJPYen = (num: number) => {
-    return num.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
-  }
+
 
   useEffect(() => {
+    const sum = result.map(item => item.amount).reduce((prev, curr) => prev + curr, 0);
+    setTotalAmount(sum)
+  
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user)
@@ -58,7 +65,7 @@ const Home: NextPage = () => {
     return () => {
       unsub()
     }
-  }, [])
+  }, [result])
 
   if (error) {
     return <h1>Error</h1>
@@ -94,7 +101,7 @@ const Home: NextPage = () => {
       <main className={styles.container}>
         <div className={styles.top}>
           <span>Total money spent</span>
-          <h3 className={styles.total}>{toJPYen(5000)}</h3>
+          <h3 className={styles.total}>{toJPYen(totalAmount)}</h3>
           <button
             className={styles.newRecordButton}
             onClick={() => {
