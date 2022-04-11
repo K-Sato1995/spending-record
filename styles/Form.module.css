@@ -36,6 +36,7 @@
   transition: all 100ms;
   box-sizing: border-box;
   margin: 1rem 0;
+  font-size: 15px;
 }
 
 .form > button {

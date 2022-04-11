@@ -1,6 +1,7 @@
 import { db } from '../config'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import type { SpendingRecord } from '../../types'
+import { toast } from 'react-toastify'
 
 const createSpendingRecord = async (record: SpendingRecord) => {
   const { category, amount, date, uid } = record
@@ -12,9 +13,9 @@ const createSpendingRecord = async (record: SpendingRecord) => {
       date,
     })
     // Use notification library for this.
-    alert('Successfully created the record')
+    toast.success('Successfully created the record')
   } catch (e) {
-    alert('something went wrong')
+    toast.error('something went wrong')
   }
 }
 
