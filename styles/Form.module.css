@@ -48,6 +48,11 @@
   border: solid 1px #e5e7eb;
 }
 
+.form > button:last-of-type {
+    margin-top: 0;
+    color:#6a7281;
+}
+
 .form > button:hover {
   border: solid 2px #e5e7eb;
 }

@@ -85,6 +85,15 @@ const Form = () => {
           }}
         />
         <button>Create</button>
+
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            router.push('/')
+          }}
+        >
+          Back to Home
+        </button>
       </form>
     </div>
   )

@@ -5,18 +5,11 @@ import { auth, db } from '../firebase/config'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  startAt,
-  endAt,
-} from 'firebase/firestore'
+import { collection, query, where, orderBy } from 'firebase/firestore'
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
-
+import Link from 'next/link'
 
 const toJPYen = (num: number) => {
   return num.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
@@ -48,12 +41,12 @@ const Home: NextPage = () => {
 
   const [result, loading, error] = useFetchCollectionData(q)
 
-
-
   useEffect(() => {
-    const sum = result.map(item => item.amount).reduce((prev, curr) => prev + curr, 0);
+    const sum = result
+      .map((item) => item.amount)
+      .reduce((prev, curr) => prev + curr, 0)
     setTotalAmount(sum)
-  
+
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user)
@@ -157,7 +150,14 @@ const Home: NextPage = () => {
             </ul>
           </div>
         </div>
-        <div className={styles.footer}></div>
+        {/* <div className={styles.footer}>
+          <Link href='/'>
+            Home
+          </Link>
+          <Link href='/form'>
+            Charts
+          </Link>
+        </div> */}
       </main>
     </div>
   )
