@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
-import { signIn, signOut } from '../firebase/authentication'
 import { auth, db } from '../firebase/config'
 import { onAuthStateChanged, User } from 'firebase/auth'
 import Head from 'next/head'
@@ -16,7 +15,6 @@ const toJPYen = (num: number) => {
 }
 
 const Home: NextPage = () => {
-  const [user, setUser] = useState<User | null>()
   const router = useRouter()
   const [monthNum, setMonthNum] = useState<number>(0)
   const [totalAmount, setTotalAmount] = useState<number>(0)
@@ -46,18 +44,6 @@ const Home: NextPage = () => {
       .map((item) => item.amount)
       .reduce((prev, curr) => prev + curr, 0)
     setTotalAmount(sum)
-
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user)
-      } else {
-        setUser(null)
-      }
-    })
-
-    return () => {
-      unsub()
-    }
   }, [result])
 
   if (error) {
@@ -66,21 +52,6 @@ const Home: NextPage = () => {
 
   if (loading) {
     return <h1>Loading</h1>
-  }
-
-  if (!user) {
-    return (
-      <>
-        <h1>Need to signin</h1>
-        <button
-          onClick={() => {
-            signIn()
-          }}
-        >
-          SignIN
-        </button>
-      </>
-    )
   }
 
   return (
