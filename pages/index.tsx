@@ -7,6 +7,7 @@ import { collection, query, where, orderBy } from 'firebase/firestore'
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
+import { env } from 'process'
 
 const toJPYen = (num: number) => {
   return num.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
@@ -26,10 +27,9 @@ const Home: NextPage = () => {
   const startDate = new Date(year, month + monthNum, 1)
   const endDate = new Date(year, month + monthNum + 1, 0)
 
-  const uid = 'shum4q84tFOdAfORInn6QRXRUbt2'
   const q = query(
     collection(db, 'spendingRecords'),
-    where('uid', '==', uid),
+    where('uid', 'in', [process.env.NEXT_PUBLIC_UID1, process.env.NEXT_PUBLIC_UID2]),
     orderBy('date', 'asc'),
     where('date', '>=', startDate),
     where('date', '<=', endDate),

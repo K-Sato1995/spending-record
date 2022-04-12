@@ -20,7 +20,8 @@ const timestamp = (datetimeStr: string) => {
   return Timestamp.fromDate(new Date(datetimeStr))
 }
 
-const uid = 'shum4q84tFOdAfORInn6QRXRUbt2'
+const uid = process.env.NEXT_PUBLIC_UID1
+
 const Form = () => {
   const router = useRouter()
   const formDefaultValue = {
