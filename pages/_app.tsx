@@ -31,7 +31,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <h1>Need to signin</h1>
         <input placeholder='Email' value={emailPass.email} onChange={(e) => { setEamilPass({...emailPass, email: e.target.value})}}/>
         <input placeholder='Password'value={emailPass.password} onChange={(e) => { setEamilPass({...emailPass, password: e.target.value})}}/>
-
         <button
           onClick={() => {
             signIn(emailPass.email, emailPass.password)
