@@ -55,7 +55,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Spending Record</title>
         <meta name='description' content='Record spendings' />
         <link rel='icon' href='/favicon.ico' />
 
