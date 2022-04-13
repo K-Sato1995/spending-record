@@ -6,7 +6,7 @@ import { Timestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import Select from 'react-select'
 import { toast } from 'react-toastify'
-import DatePicker from "react-datepicker";
+import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 const options = [
@@ -50,7 +50,7 @@ const Form = () => {
           createSpendingRecord({
             ...formValue,
             date: timestamp(formValue.date),
-            uid: uid,
+            uid: uid as string,
           })
 
           setFormValue(formDefaultValue)
@@ -79,12 +79,12 @@ const Form = () => {
           }}
         />
         <DatePicker
-            selected={formValue.date}
-            placeholderText="Date"
-            onChange={(date) => {
-              setFormValue({ ...formValue, date: date })
-            }}
-          />
+          selected={formValue.date}
+          placeholderText='Date'
+          onChange={(date) => {
+            setFormValue({ ...formValue, date: date })
+          }}
+        />
         <button>Create</button>
 
         <button

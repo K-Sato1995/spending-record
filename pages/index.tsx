@@ -1,13 +1,11 @@
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
-import { auth, db } from '../firebase/config'
-import Head from 'next/head'
+import { db } from '../firebase/config'
 import styles from '../styles/Home.module.css'
 import { collection, query, where, orderBy } from 'firebase/firestore'
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import { useRouter } from 'next/router'
-import { env } from 'process'
 
 const toJPYen = (num: number) => {
   return num.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
@@ -29,7 +27,10 @@ const Home: NextPage = () => {
 
   const q = query(
     collection(db, 'spendingRecords'),
-    where('uid', 'in', [process.env.NEXT_PUBLIC_UID1, process.env.NEXT_PUBLIC_UID2]),
+    where('uid', 'in', [
+      process.env.NEXT_PUBLIC_UID1,
+      process.env.NEXT_PUBLIC_UID2,
+    ]),
     orderBy('date', 'asc'),
     where('date', '>=', startDate),
     where('date', '<=', endDate),
@@ -54,47 +55,6 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Head>
-        <title>Spending Record</title>
-        <meta name='description' content='Record spendings' />
-        <link rel='icon' href='/favicon.ico' />
-
-          {/* windows */}
-          <meta
-            name="msapplication-square70x70logo"
-            content="/site-tile-70x70.png"
-          />
-          <meta
-            name="msapplication-square150x150logo"
-            content="/site-tile-150x150.png"
-          />
-          <meta
-            name="msapplication-wide310x150logo"
-            content="/site-tile-310x150.png"
-          />
-          <meta
-            name="msapplication-square310x310logo"
-            content="/site-tile-310x310.png"
-          />
-          <meta name="msapplication-TileColor" content="#000" />
-          {/* safari */}
-          <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="apple-mobile-web-app-status-bar-style" content="#000" />
-          <meta name="apple-mobile-web-app-title" content="myapp" />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/apple-touch-icon-180x180.png"
-          />
-          {/* 一般 */}
-          <meta name="application-name" content="myapp" />
-          <meta name="theme-color" content="#000" />
-          <meta name="description" content="this is myapp" />
-          <link rel="icon" sizes="192x192" href="/icon-192x192.png" />
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="manifest" href="/manifest.json" />
-      </Head>
-
       <main className={styles.container}>
         <div className={styles.top}>
           <span>Total money spent</span>

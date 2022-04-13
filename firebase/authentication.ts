@@ -9,7 +9,7 @@ const signUp = () => {
   alert('Beep Beep')
 }
 
-const signIn = (email:string, password: string) => {
+const signIn = (email: string, password: string) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user
