@@ -21,9 +21,16 @@
   position: relative;
 }
 
-.top > span {
+.totalMoneyTag {
   color: var(--secondary-color);
   margin-bottom: 1rem;
+}
+
+.top > a {
+  color: var(--main-color);
+  position: absolute;
+  top: 5%;
+  right: 5%;
 }
 
 .total {

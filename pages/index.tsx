@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import { collection, query, where, orderBy } from 'firebase/firestore'
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 const toJPYen = (num: number) => {
@@ -57,7 +58,8 @@ const Home: NextPage = () => {
     <div>
       <main className={styles.container}>
         <div className={styles.top}>
-          <span>Total money spent</span>
+          <Link href="/charts">Charts</Link>
+          <span className={styles.totalMoneyTag}>Total money spent</span>
           <h3 className={styles.total}>{toJPYen(totalAmount)}</h3>
           <button
             className={styles.newRecordButton}
