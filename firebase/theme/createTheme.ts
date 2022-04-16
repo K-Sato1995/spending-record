@@ -9,7 +9,7 @@ const createTheme = async (theme: Omit<Theme, 'isApplied'>) => {
     await addDoc(collection(db, 'theme'), {
       mainColor,
       textColor,
-      isApplied: false,
+      isApplied: true,
       uid,
     })
     // Use notification library for this.

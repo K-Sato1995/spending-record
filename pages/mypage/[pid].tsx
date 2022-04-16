@@ -21,7 +21,7 @@ const MyPage = () => {
       <div className={styles.myPageHeader}>
         <h3>MyPage</h3>
         <Link href='/'>
-          <a>Home</a>
+          <a>Back to Top</a>
         </Link>
       </div>
 
@@ -32,20 +32,7 @@ const MyPage = () => {
       >
         <h3 style={{ color: formValue.textColor }}>Text Color</h3>
       </div>
-      <form
-        onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault()
-          if (!formValue.mainColor || !formValue.textColor) {
-            toast.error('You have to fill up all the fields')
-            return
-          }
-          createTheme({
-            ...formValue,
-            uid: pid as string,
-          })
-          setFormValue(defaultFormValue)
-        }}
-      >
+      <form>
         <div className={styles.formSection}>
           <h3>Choose Main Color</h3>
           <RgbaStringColorPicker
@@ -64,7 +51,22 @@ const MyPage = () => {
           />
         </div>
         <div className={styles.buttonList}>
-          <button>Create</button>
+          <button
+            onClick={(e) => {
+                e.preventDefault()
+              if (!formValue.mainColor || !formValue.textColor) {
+                toast.error('You have to fill up all the fields')
+                return
+              }
+              createTheme({
+                ...formValue,
+                uid: pid as string,
+              })
+              setFormValue(defaultFormValue)
+            }}
+          >
+            Create and Apply the theme
+          </button>
         </div>
       </form>
     </div>

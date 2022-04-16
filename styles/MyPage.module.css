@@ -32,12 +32,11 @@
   justify-content: center;
 }
 
-.buttonList {    
-    display: flex;
-    justify-content: center;
-    margin: 1rem 0;
+.buttonList {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
 }
-
 
 .buttonList > button {
   margin: 1rem 0;
@@ -49,6 +48,5 @@
 }
 
 .buttonList > button:hover {
-    border: solid 2px #e5e7eb;
-  }
-  
+  border: solid 2px #e5e7eb;
+}
