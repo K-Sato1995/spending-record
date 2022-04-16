@@ -29,10 +29,17 @@
 .top > a {
   color: var(--main-color);
   position: absolute;
+}
+
+.linkToCharts {
   top: 5%;
   right: 5%;
 }
 
+.linkToMyPage {
+  top: 5%;
+  right: 20%;
+}
 .total {
   margin: 0;
   font-size: 1.5rem;

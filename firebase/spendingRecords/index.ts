@@ -1,3 +1,4 @@
 import createSpendingRecord from './createSpendingRecord'
+import updateTheme from '../theme/updateTheme'
 
-export { createSpendingRecord }
+export { createSpendingRecord, updateTheme }

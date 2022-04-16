@@ -7,6 +7,7 @@ import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { auth } from '../firebase/config'
 
 const toJPYen = (num: number) => {
   return num.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
@@ -16,6 +17,8 @@ const Home: NextPage = () => {
   const router = useRouter()
   const [monthNum, setMonthNum] = useState<number>(0)
   const [totalAmount, setTotalAmount] = useState<number>(0)
+
+  const currentUser = auth.currentUser
 
   // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#syntax
   // const date = new Date(), year = date.getFullYear(), month = date.getMonth();
@@ -50,15 +53,23 @@ const Home: NextPage = () => {
     return <h1>Error</h1>
   }
 
-  if (loading) {
+  if (loading || !currentUser) {
     return <h1>Loading</h1>
   }
 
+  // mainColor
+  // textColor
   return (
     <div>
       <main className={styles.container}>
         <div className={styles.top}>
-          <Link href='/charts'>Charts</Link>
+          <Link href='/charts'>
+            <a className={styles.linkToCharts}>Charts</a>
+          </Link>
+          <Link href={`/mypage/${currentUser.uid}`}>
+            <a className={styles.linkToMyPage}>MyPage</a>
+          </Link>
+
           <span className={styles.totalMoneyTag}>Total money spent</span>
           <h3 className={styles.total}>{toJPYen(totalAmount)}</h3>
           <button

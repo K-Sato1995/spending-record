@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import React from 'react'
 import { onAuthStateChanged, User } from 'firebase/auth'
-import { auth, db } from '../firebase/config'
+import { auth } from '../firebase/config'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'

@@ -1,0 +1,54 @@
+.mypageContainer {
+  --main-color: #fff;
+  --background-color: #141318;
+  --secondary-color: #6a7281;
+  --link-color: #0076df;
+  --border-color: #e5e7eb;
+}
+
+.myPageHeader {
+  height: 60px;
+  background-color: var(--background-color);
+  color: var(--main-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.result {
+  height: 150px;
+  width: 100%;
+  border: solid 1px var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonList {    
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+
+.buttonList > button {
+  margin: 1rem 0;
+  height: 38px;
+  background: none;
+  outline: none;
+  border: none;
+  border: solid 1px #e5e7eb;
+}
+
+.buttonList > button:hover {
+    border: solid 2px #e5e7eb;
+  }
+  

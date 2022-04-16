@@ -7,4 +7,11 @@ interface SpendingRecord {
   date: any // ill look up later
 }
 
-export { SpendingCategory, SpendingRecord }
+interface Theme {
+  mainColor: string
+  textColor: string
+  uid: string
+  isApplied: boolean
+}
+
+export { SpendingCategory, SpendingRecord, Theme }
