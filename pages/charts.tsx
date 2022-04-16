@@ -7,10 +7,10 @@ import {
   Title,
   Tooltip,
   Legend,
+  ArcElement
 } from 'chart.js'
-import { Bar } from 'react-chartjs-2'
-import type { NextPage } from 'next'
-import { useState, useEffect } from 'react'
+import { Bar, Doughnut } from 'react-chartjs-2'
+import { useState } from 'react'
 import { db } from '../firebase/config'
 import styles from '../styles/Charts.module.css'
 import { collection, query, where, orderBy } from 'firebase/firestore'
@@ -18,7 +18,6 @@ import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import type { SpendingCategory } from '../types'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -27,10 +26,6 @@ export const options = {
   plugins: {
     legend: {
       position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Monthly spending record',
     },
   },
   scales: {
@@ -49,6 +44,8 @@ const datasetMap = {
   Rent: 2,
   Others: 3,
 }
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Charts() {
   const [monthNum, setMonthNum] = useState<number>(0)
@@ -84,7 +81,7 @@ export default function Charts() {
 
   const labels = ['Week1', 'Week2', 'Week3', 'Week4']
 
-  let data = {
+  let barData = {
     labels,
     datasets: [
       {
@@ -110,22 +107,48 @@ export default function Charts() {
     ],
   }
 
+
+ const doughnutData = {
+  labels: ['Groceries', 'Bills', 'Rent', 'Others'],
+  datasets: [
+    {
+      data: [0, 0, 0, 0],
+      backgroundColor: [
+        'rgb(181, 234, 234, 0.7)',
+        'rgb(255, 188, 188, 0.7)',
+        'rgb(237, 246, 229, 0.7)',
+        'rgb(243, 139, 160, 0.7)',
+      ],
+      borderColor: [
+        'rgb(181, 234, 234, 1)',
+        'rgb(255, 188, 188, 1)',
+        'rgb(237, 246, 229,  1)',
+        'rgb(243, 139, 160, 1)',
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
+
   result.map((item, _i) => {
     const date = new Date(item?.date.toDate()).getDate()
     const amount = item.amount
     const category = item.category as SpendingCategory
     const datasetIndex = datasetMap[category]
-    const dataset = data.datasets[datasetIndex]
-
+    // Bar Charts
+    const datasetBar = barData.datasets[datasetIndex]
     if (date <= 7) {
-      dataset.data.Week1 += amount
+      datasetBar.data.Week1 += amount
     } else if (date <= 14) {
-      dataset.data.Week2 += amount
+      datasetBar.data.Week2 += amount
     } else if (date <= 21) {
-      dataset.data.Week3 += amount
+      datasetBar.data.Week3 += amount
     } else {
-      dataset.data.Week4 += amount
+      datasetBar.data.Week4 += amount
     }
+
+    // Doughnut Charts
+    doughnutData.datasets[0].data[datasetIndex] += amount
   })
 
   return (
@@ -154,8 +177,13 @@ export default function Charts() {
       </div>
 
       <div className={styles.barChartContainer}>
-        <h2></h2>
-        <Bar options={options} data={data} />
+        <h3>Spending Records by week</h3>
+        <Bar options={options} data={barData} />
+      </div>
+
+      <div className={styles.doughnutChartContainer}>
+        <h3>Spending Records Ratio</h3>
+        <Doughnut options={options} data={doughnutData} />
       </div>
     </div>
   )

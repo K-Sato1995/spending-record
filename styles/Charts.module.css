@@ -45,4 +45,10 @@
 .barChartContainer {
   margin-top: 1rem;
   padding: 0 0.1rem;
+  
+}
+
+.doughnutChartContainer {
+  margin-top: 1rem;
+  padding: 0 0.1rem;
 }
