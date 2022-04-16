@@ -7,7 +7,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  ArcElement
+  ArcElement,
 } from 'chart.js'
 import { Bar, Doughnut } from 'react-chartjs-2'
 import { useState } from 'react'
@@ -45,7 +45,7 @@ const datasetMap = {
   Others: 3,
 }
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 export default function Charts() {
   const [monthNum, setMonthNum] = useState<number>(0)
@@ -107,28 +107,27 @@ export default function Charts() {
     ],
   }
 
-
- const doughnutData = {
-  labels: ['Groceries', 'Bills', 'Rent', 'Others'],
-  datasets: [
-    {
-      data: [0, 0, 0, 0],
-      backgroundColor: [
-        'rgb(181, 234, 234, 0.7)',
-        'rgb(255, 188, 188, 0.7)',
-        'rgb(237, 246, 229, 0.7)',
-        'rgb(243, 139, 160, 0.7)',
-      ],
-      borderColor: [
-        'rgb(181, 234, 234, 1)',
-        'rgb(255, 188, 188, 1)',
-        'rgb(237, 246, 229,  1)',
-        'rgb(243, 139, 160, 1)',
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
+  const doughnutData = {
+    labels: ['Groceries', 'Bills', 'Rent', 'Others'],
+    datasets: [
+      {
+        data: [0, 0, 0, 0],
+        backgroundColor: [
+          'rgb(181, 234, 234, 0.7)',
+          'rgb(255, 188, 188, 0.7)',
+          'rgb(237, 246, 229, 0.7)',
+          'rgb(243, 139, 160, 0.7)',
+        ],
+        borderColor: [
+          'rgb(181, 234, 234, 1)',
+          'rgb(255, 188, 188, 1)',
+          'rgb(237, 246, 229,  1)',
+          'rgb(243, 139, 160, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  }
 
   result.map((item, _i) => {
     const date = new Date(item?.date.toDate()).getDate()
