@@ -12,11 +12,12 @@ import { Bar } from 'react-chartjs-2'
 import type { NextPage } from 'next'
 import { useState, useEffect } from 'react'
 import { db } from '../firebase/config'
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Charts.module.css'
 import { collection, query, where, orderBy } from 'firebase/firestore'
 import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import type { SpendingCategory } from '../types'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
@@ -116,7 +117,6 @@ export default function Charts() {
     const datasetIndex = datasetMap[category]
     const dataset = data.datasets[datasetIndex]
 
-
     if (date <= 7) {
       dataset.data.Week1 += amount
     } else if (date <= 14) {
@@ -129,7 +129,11 @@ export default function Charts() {
   })
 
   return (
-    <>
+    <div className={styles.chartsContainer}>
+      <div className={styles.chartsHeader}>
+        <h2>Charts</h2>
+        <Link href='/'>Back to top</Link>
+      </div>
       {/* Calendar */}
       <div className={styles.targetMonth}>
         <button
@@ -149,7 +153,10 @@ export default function Charts() {
         </button>
       </div>
 
-      <Bar options={options} data={data} />
-    </>
+      <div className={styles.barChartContainer}>
+        <h2></h2>
+        <Bar options={options} data={data} />
+      </div>
+    </div>
   )
 }

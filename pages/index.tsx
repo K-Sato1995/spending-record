@@ -58,7 +58,7 @@ const Home: NextPage = () => {
     <div>
       <main className={styles.container}>
         <div className={styles.top}>
-          <Link href="/charts">Charts</Link>
+          <Link href='/charts'>Charts</Link>
           <span className={styles.totalMoneyTag}>Total money spent</span>
           <h3 className={styles.total}>{toJPYen(totalAmount)}</h3>
           <button

@@ -1,0 +1,48 @@
+.chartsContainer {
+  --main-color: #fff;
+  --background-color: #141318;
+  --secondary-color: #6a7281;
+  --link-color: #0076df;
+  --border-color: #e5e7eb;
+}
+
+.chartsHeader {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: solid 1px var(--border-color);
+  background-color: var(--background-color);
+  color: var(--main-color);
+}
+
+.chartsHeader > a {
+  margin-right: 10px;
+}
+
+.chartsHeader > h2 {
+  margin-left: 10px;
+}
+
+.targetMonth {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+}
+
+.targetMonth > button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  font-size: 1.3rem;
+  margin: 0 1rem;
+  color: var(--secondary-color);
+}
+
+.barChartContainer {
+  margin-top: 1rem;
+  padding: 0 0.1rem;
+}
