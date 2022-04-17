@@ -1,15 +1,17 @@
 import { db } from '../config'
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import type { Theme } from '../../types'
 import { toast } from 'react-toastify'
 
 const createTheme = async (theme: Omit<Theme, 'isApplied'>) => {
-  const { mainColor, textColor, uid } = theme
+  const { mainColor, textColor, uid, name } = theme
   try {
     await addDoc(collection(db, 'theme'), {
       mainColor,
       textColor,
       isApplied: true,
+      createdAt: serverTimestamp(),
+      name,
       uid,
     })
     // Use notification library for this.

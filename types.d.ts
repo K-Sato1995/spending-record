@@ -10,6 +10,7 @@ interface SpendingRecord {
 interface Theme {
   mainColor: string
   textColor: string
+  name: string
   uid: string
   isApplied: boolean
 }
