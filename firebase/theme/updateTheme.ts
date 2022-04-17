@@ -3,16 +3,13 @@ import { updateDoc, doc } from 'firebase/firestore'
 import type { Theme } from '../../types'
 import { toast } from 'react-toastify'
 
-const updateTheme = async (
-  id: string,
-  theme: Pick<Theme, 'isApplied'>,
-) => {
+const updateTheme = async (id: string, theme: Pick<Theme, 'isApplied'>) => {
   const { isApplied } = theme
   const themeRef = doc(db, 'theme', id)
 
   try {
     await updateDoc(themeRef, {
-      isApplied
+      isApplied,
     })
     // Use notification library for this.
     toast.success('Successfully updated the theme')

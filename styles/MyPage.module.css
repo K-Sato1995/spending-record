@@ -73,6 +73,7 @@
 }
 
 .themeItem {
+  position: relative;
   min-height: 150px;
   width: 100%;
   border: solid 1px var(--border-color);
@@ -81,4 +82,20 @@
   justify-content: center;
   overflow: scroll;
   margin: 1rem 0;
+}
+
+.themeSelectBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 38px;
+  background: #fff;
+  outline: none;
+  border: none;
+  border: solid 1px #e5e7eb;
+  visibility: hidden;
+}
+
+.themeItem:hover > .themeSelectBtn {
+  visibility: visible;
 }

@@ -86,8 +86,8 @@ const MyPage = () => {
                 return
               }
 
-              if(currentTheme) {
-                updateTheme(currentTheme.id, { isApplied: false})
+              if (currentTheme) {
+                updateTheme(currentTheme.id, { isApplied: false })
               }
 
               createTheme({
@@ -108,9 +108,24 @@ const MyPage = () => {
           <div
             className={styles.themeItem}
             key={i}
-            style={{ backgroundColor: item.mainColor, color: item.textColor, display: item.isApplied ? "none" : ""}}
+            style={{
+              backgroundColor: item.mainColor,
+              color: item.textColor,
+              display: item.isApplied ? 'none' : '',
+            }}
           >
             {item.name ? item.name : 'Text color'}
+            <button
+              onClick={() => {
+                if (currentTheme) {
+                  updateTheme(currentTheme.id, { isApplied: false })
+                }
+                updateTheme(item.id, { isApplied: true })
+              }}
+              className={styles.themeSelectBtn}
+            >
+              Use this theme
+            </button>
           </div>
         ))}
       </div>
