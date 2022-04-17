@@ -1,7 +1,6 @@
-import { createContext } from 'react';
-import type { Theme } from "../types"
+import { createContext } from 'react'
+import type { Theme } from '../types'
 
-const ThemeContext = createContext<Theme | null>(null);
-
+const ThemeContext = createContext<Theme[]>([])
 
 export default ThemeContext

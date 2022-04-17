@@ -59,11 +59,12 @@ export default function Charts() {
   const startDate = new Date(year, month + monthNum, 1)
   const endDate = new Date(year, month + monthNum + 1, 0)
 
+  const themes = useContext(ThemeContext)
 
-  const theme = useContext(ThemeContext)
+  const currentTheme = themes.filter((theme) => theme.isApplied)[0]
 
-  const mainColor = theme ? theme.mainColor : "#141318"
-  const textColor = theme ? theme.textColor : "#fff"
+  const mainColor = currentTheme ? currentTheme.mainColor : '#141318'
+  const textColor = currentTheme ? currentTheme.textColor : '#fff'
 
   const q = query(
     collection(db, 'spendingRecords'),
@@ -159,7 +160,10 @@ export default function Charts() {
 
   return (
     <div className={styles.chartsContainer}>
-      <div className={styles.chartsHeader} style={{backgroundColor: mainColor, color: textColor}}>
+      <div
+        className={styles.chartsHeader}
+        style={{ backgroundColor: mainColor, color: textColor }}
+      >
         <h2>Charts</h2>
         <Link href='/'>Back to top</Link>
       </div>

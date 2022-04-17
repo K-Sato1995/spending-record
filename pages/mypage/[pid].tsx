@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../../styles/MyPage.module.css'
 import { RgbaStringColorPicker } from 'react-colorful'
@@ -8,6 +8,7 @@ import { db } from '../../firebase/config'
 import { createTheme } from '../../firebase/theme'
 import { collection, query, where, orderBy } from 'firebase/firestore'
 import useFetchCollectionData from '../../hooks/useFetchCollectionData'
+import ThemeContext from '../../contexts/themeContext'
 
 const defaultFormValue = {
   mainColor: '#141318',
@@ -20,35 +21,19 @@ const MyPage = () => {
   const { pid } = router.query
   const [formValue, setFormValue] = React.useState(defaultFormValue)
 
-  const q = query(
-    collection(db, 'theme'),
-    where('uid', '==', pid),
-    orderBy('createdAt', 'asc'),
-  )
+  const themes = useContext(ThemeContext)
 
-  const [result, loading, error] = useFetchCollectionData(q)
+  const currentTheme = themes.filter((theme) => theme.isApplied)[0]
 
-  const currentTheme = result.filter(theme => theme.isApplied)[0]
-
-  const mainColor = currentTheme ? currentTheme.mainColor : "#141318"
-  const textColor = currentTheme ? currentTheme.textColor : "#fff"
-
-
-  if (error) {
-    return <h1>Error</h1>
-  }
-
-  if (loading) {
-    return <h1>Loading</h1>
-  }
-
-  console.log(result)
-  
-  
+  const mainColor = currentTheme ? currentTheme.mainColor : '#141318'
+  const textColor = currentTheme ? currentTheme.textColor : '#fff'
 
   return (
     <div className={styles.mypageContainer}>
-      <div className={styles.myPageHeader} style={{backgroundColor: mainColor, color: textColor}}>
+      <div
+        className={styles.myPageHeader}
+        style={{ backgroundColor: mainColor, color: textColor }}
+      >
         <h3>MyPage</h3>
         <Link href='/'>
           <a>Back to Top</a>
@@ -116,11 +101,13 @@ const MyPage = () => {
       </form>
 
       <div className={styles.listOfThemes}>
-
-
-      <h2 className={styles.title}>List of Themes</h2>
-        {result.map((item, i) => (
-          <div className={styles.themeItem} key={i} style={{backgroundColor: item.mainColor, color: item.textColor}}>
+        <h2 className={styles.title}>List of Themes</h2>
+        {themes.map((item, i) => (
+          <div
+            className={styles.themeItem}
+            key={i}
+            style={{ backgroundColor: item.mainColor, color: item.textColor }}
+          >
             {item.name ? item.name : 'Text color'}
           </div>
         ))}

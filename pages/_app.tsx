@@ -7,14 +7,18 @@ import type { AppProps } from 'next/app'
 import { ToastContainer } from 'react-toastify'
 import { signIn } from '../firebase/authentication'
 import { db } from '../firebase/config'
-import { collection, query, where, orderBy,   Query,
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  Query,
   DocumentData,
-  onSnapshot } from 'firebase/firestore'
-import type { NextComponentType  } from 'next'
-import type { Theme } from '../types' 
+  onSnapshot,
+} from 'firebase/firestore'
+import type { Theme } from '../types'
 import ThemeContext from '../contexts/themeContext'
 import 'react-toastify/dist/ReactToastify.css'
-
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = React.useState<User | null>()
@@ -24,25 +28,20 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = React.useState<boolean>(false)
   const [result, setResult] = React.useState<any[]>([])
 
-
   React.useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user)
-        const q = query(
-          collection(db, 'theme'),
-          where('uid', '==', user?.uid),
-          where('isApplied', '==', true),
-        )
-      
+        const q = query(collection(db, 'theme'), where('uid', '==', user.uid))
+
         onSnapshot(q, (fbData) => {
           try {
             const data: DocumentData[] = []
-    
+
             fbData.forEach((doc) => {
               data.push({ ...doc.data(), id: doc.id })
             })
-    
+
             // Not sure what the best way to handle this is
             if (result.toString() !== data.toString()) {
               setResult(data)
@@ -53,7 +52,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             setError(err)
           }
         })
-    
       } else {
         setUser(null)
       }
@@ -64,7 +62,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   }, [result])
 
-  
   const condiRenderComp = () => {
     return !user ? (
       <>
@@ -144,10 +141,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel='manifest' href='/manifest.json' />
       </Head>
 
-      <ThemeContext.Provider value={result[0] as Theme}>
+      <ThemeContext.Provider value={result as Theme[]}>
         {condiRenderComp()}
       </ThemeContext.Provider>
-
     </>
   )
 }
