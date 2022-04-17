@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -18,6 +18,7 @@ import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import type { SpendingCategory } from '../types'
 import Link from 'next/link'
+import ThemeContext from '../contexts/themeContext'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -57,6 +58,12 @@ export default function Charts() {
   const month = today.getMonth()
   const startDate = new Date(year, month + monthNum, 1)
   const endDate = new Date(year, month + monthNum + 1, 0)
+
+
+  const theme = useContext(ThemeContext)
+
+  const mainColor = theme ? theme.mainColor : "#141318"
+  const textColor = theme ? theme.textColor : "#fff"
 
   const q = query(
     collection(db, 'spendingRecords'),
@@ -152,7 +159,7 @@ export default function Charts() {
 
   return (
     <div className={styles.chartsContainer}>
-      <div className={styles.chartsHeader}>
+      <div className={styles.chartsHeader} style={{backgroundColor: mainColor, color: textColor}}>
         <h2>Charts</h2>
         <Link href='/'>Back to top</Link>
       </div>

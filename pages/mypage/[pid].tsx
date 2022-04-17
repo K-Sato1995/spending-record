@@ -28,6 +28,12 @@ const MyPage = () => {
 
   const [result, loading, error] = useFetchCollectionData(q)
 
+  const currentTheme = result.filter(theme => theme.isApplied)[0]
+
+  const mainColor = currentTheme ? currentTheme.mainColor : "#141318"
+  const textColor = currentTheme ? currentTheme.textColor : "#fff"
+
+
   if (error) {
     return <h1>Error</h1>
   }
@@ -37,10 +43,12 @@ const MyPage = () => {
   }
 
   console.log(result)
+  
+  
 
   return (
     <div className={styles.mypageContainer}>
-      <div className={styles.myPageHeader}>
+      <div className={styles.myPageHeader} style={{backgroundColor: mainColor, color: textColor}}>
         <h3>MyPage</h3>
         <Link href='/'>
           <a>Back to Top</a>

@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { db } from '../firebase/config'
 import styles from '../styles/Home.module.css'
 import { collection, query, where, orderBy } from 'firebase/firestore'
@@ -7,7 +7,9 @@ import useFetchCollectionData from '../hooks/useFetchCollectionData'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import ThemeContext from '../contexts/themeContext'
 import { auth } from '../firebase/config'
+
 
 const toJPYen = (num: number) => {
   return num.toLocaleString('ja-JP', { style: 'currency', currency: 'JPY' })
@@ -17,8 +19,11 @@ const Home: NextPage = () => {
   const router = useRouter()
   const [monthNum, setMonthNum] = useState<number>(0)
   const [totalAmount, setTotalAmount] = useState<number>(0)
-
+  const theme = useContext(ThemeContext)
   const currentUser = auth.currentUser
+
+  const mainColor = theme ? theme.mainColor : "#141318"
+  const textColor = theme ? theme.textColor : "#fff"
 
   // INFO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/Date#syntax
   // const date = new Date(), year = date.getFullYear(), month = date.getMonth();
@@ -57,26 +62,28 @@ const Home: NextPage = () => {
     return <h1>Loading</h1>
   }
 
-  // mainColor
-  // textColor
   return (
     <div>
       <main className={styles.container}>
-        <div className={styles.top}>
+        <div
+          className={styles.top}
+          style={{backgroundColor: mainColor}}
+        >
           <Link href='/charts'>
-            <a className={styles.linkToCharts}>Charts</a>
+            <a className={styles.linkToCharts}  style={{color: textColor}}>Charts</a>
           </Link>
           <Link href={`/mypage/${currentUser.uid}`}>
-            <a className={styles.linkToMyPage}>MyPage</a>
+            <a className={styles.linkToMyPage} style={{color: textColor}}>MyPage</a>
           </Link>
 
-          <span className={styles.totalMoneyTag}>Total money spent</span>
-          <h3 className={styles.total}>{toJPYen(totalAmount)}</h3>
+          <span className={styles.totalMoneyTag} style={{color: textColor}}>Total money spent</span>
+          <h3 className={styles.total} style={{color: textColor}}>{toJPYen(totalAmount)}</h3>
           <button
             className={styles.newRecordButton}
             onClick={() => {
               router.push('/form')
             }}
+            style={{borderColor: mainColor, color: textColor}}
           >
             <span>+</span>
           </button>

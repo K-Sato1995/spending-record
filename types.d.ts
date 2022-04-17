@@ -15,4 +15,5 @@ interface Theme {
   isApplied: boolean
 }
 
+
 export { SpendingCategory, SpendingRecord, Theme }
