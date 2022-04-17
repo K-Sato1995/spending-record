@@ -4,10 +4,7 @@ import styles from '../../styles/MyPage.module.css'
 import { RgbaStringColorPicker } from 'react-colorful'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
-import { db } from '../../firebase/config'
-import { createTheme } from '../../firebase/theme'
-import { collection, query, where, orderBy } from 'firebase/firestore'
-import useFetchCollectionData from '../../hooks/useFetchCollectionData'
+import { createTheme, updateTheme } from '../../firebase/theme'
 import ThemeContext from '../../contexts/themeContext'
 
 const defaultFormValue = {
@@ -88,6 +85,11 @@ const MyPage = () => {
                 toast.error('You have to fill up all the fields')
                 return
               }
+
+              if(currentTheme) {
+                updateTheme(currentTheme.id, { isApplied: false})
+              }
+
               createTheme({
                 ...formValue,
                 uid: pid as string,
@@ -106,7 +108,7 @@ const MyPage = () => {
           <div
             className={styles.themeItem}
             key={i}
-            style={{ backgroundColor: item.mainColor, color: item.textColor }}
+            style={{ backgroundColor: item.mainColor, color: item.textColor, display: item.isApplied ? "none" : ""}}
           >
             {item.name ? item.name : 'Text color'}
           </div>

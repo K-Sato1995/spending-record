@@ -5,15 +5,14 @@ import { toast } from 'react-toastify'
 
 const updateTheme = async (
   id: string,
-  theme: Omit<Theme, 'uid' | 'isApplied'>,
+  theme: Pick<Theme, 'isApplied'>,
 ) => {
-  const { mainColor, textColor } = theme
+  const { isApplied } = theme
   const themeRef = doc(db, 'theme', id)
 
   try {
     await updateDoc(themeRef, {
-      mainColor,
-      textColor,
+      isApplied
     })
     // Use notification library for this.
     toast.success('Successfully updated the theme')

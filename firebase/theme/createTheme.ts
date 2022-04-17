@@ -3,7 +3,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import type { Theme } from '../../types'
 import { toast } from 'react-toastify'
 
-const createTheme = async (theme: Omit<Theme, 'isApplied'>) => {
+const createTheme = async (theme: Omit<Theme, 'isApplied' | 'id'>) => {
   const { mainColor, textColor, uid, name } = theme
   try {
     await addDoc(collection(db, 'theme'), {

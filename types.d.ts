@@ -8,6 +8,7 @@ interface SpendingRecord {
 }
 
 interface Theme {
+  id: string
   mainColor: string
   textColor: string
   name: string
