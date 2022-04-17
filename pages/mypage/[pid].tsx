@@ -111,12 +111,23 @@ const MyPage = () => {
             style={{
               backgroundColor: item.mainColor,
               color: item.textColor,
-              display: item.isApplied ? 'none' : '',
             }}
           >
+            <span
+              className={styles.currentThemeTag}
+              style={{
+                display: item.isApplied ? 'block' : 'none',
+              }}
+            >
+              Current Theme
+            </span>
             {item.name ? item.name : 'Text color'}
             <button
               onClick={() => {
+                if (currentTheme.id === item.id) {
+                  toast.error('That is your current theme.')
+                  return
+                }
                 if (currentTheme) {
                   updateTheme(currentTheme.id, { isApplied: false })
                 }
